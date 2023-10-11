@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  database:
+    image: postgres:latest
+    container_name: scholar_database
+    ports:
+      - 54321:5432 # extern:intern
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - database:/data
+    networks:
+      - scholar_dev
+
+volumes:
+  database:
+   driver: local
+
+networks:
+  scholar_dev:
+    external: false
