@@ -48,7 +48,7 @@ export class AppService extends StudentService{
         throw new NotFoundException('Student not exist');
       }
       const {password, ...res} = student;
-      const access_token = await this.generateToken(res);
+      const access_token = await this.generateToken(res.id);
       return Promise.resolve({
         ...res,
         access_token,
