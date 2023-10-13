@@ -34,4 +34,65 @@ export class ApplicationService {
       throw new BadRequestException(e,"Application not created")
     }
   }
+
+  async getAllApplication(): Promise<Application[]> {
+    return await this.prisma.application.findMany();
+  }
+
+  async getApplicationById(id: string): Promise<Application> {
+    try {
+      const application: Application = await this.prisma.application.findUnique({
+        where: {
+          id: id
+        }
+      })
+      return application;
+    } catch (error) {
+      throw new BadRequestException(error,"Application not found")
+    }
+  }
+
+  async updateApplication(id: string, data: Prisma.ApplicationUpdateInput): Promise<Application> {
+    try {
+      const application: Application = await this.prisma.application.update({
+        where: {
+          id: id
+        },
+        data: {
+          university_name: data.university_name,
+          university_course: data.university_course,
+        }
+      })
+      return application;
+    } catch (error) {
+      throw new BadRequestException(error,"Application not updated")
+    }
+  }
+
+  async deleteApplication(id: string): Promise<Application> {
+    try {
+      const application: Application = await this.prisma.application.delete({
+        where: {
+          id: id
+        }
+      })
+      return application;
+    } catch (error) {
+      throw new BadRequestException(error,"Application not deleted")
+    }
+  }
+
+  async getApplicationByStudentId(student_id: string): Promise<Application[]> {
+    try {
+      const application: Application[] = await this.prisma.application.findMany({
+        where: {
+          studentId: student_id
+        }
+      })
+      return application;
+    } catch (error) {
+      throw new BadRequestException(error,"Application not found")
+    }
+  }
+
 }
