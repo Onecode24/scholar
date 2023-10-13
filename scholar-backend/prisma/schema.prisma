@@ -23,7 +23,7 @@ model Student {
   password String
   sexe Sexe
   age Int
-  student Application[] @ignore
+  student Application[]
 }
 
 model Application{

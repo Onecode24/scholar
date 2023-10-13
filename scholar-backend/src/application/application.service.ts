@@ -7,14 +7,27 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class ApplicationService {
 
   constructor(private prisma: PrismaService){}
-  async createApplication(data: Prisma.ApplicationCreateInput): Promise<Application> {
+  async createApplication(data: Prisma.ApplicationCreateInput, student_id: string): Promise<Application> {
     try {
-      const data: Prisma.ApplicationCreateInput = {
-        university_name: '',
-        university_course: ''
-      }
+      // const _data: Prisma.ApplicationCreateInput = {
+      //   university_name: '',
+      //   university_course: '',
+      //   student: {
+      //     connect: {
+      //       id: data.student_id;
+      //     }
+      //   }
+      // }
       const application: Application = await this.prisma.application.create({
-        data,
+        data: {
+          university_name: data.university_name,
+          university_course: data.university_course,
+          student: {
+            connect: {
+              id: student_id
+            }
+          }
+        }
       })
       return application;
     } catch (e) {
