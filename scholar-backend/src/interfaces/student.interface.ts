@@ -2,11 +2,12 @@ export interface StudentInterface {
     lastname: string;
     firstname: string;
     email: string;
+    password: string;
     sexe: "M" | "F";
     age: number;
 }
 
-enum Sexe {
-    "M",
-    "F"
+export interface LoginInterface {
+    email: string;
+    password: string;
 }

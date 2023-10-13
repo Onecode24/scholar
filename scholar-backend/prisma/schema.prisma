@@ -20,6 +20,7 @@ model Student {
   firstname String
   lastname String
   email String @unique
+  password String
   sexe Sexe
   age Int
   student Application[] @ignore

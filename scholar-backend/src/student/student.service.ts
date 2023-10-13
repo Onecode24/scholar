@@ -6,7 +6,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class StudentService {
 
-    constructor(private prisma: PrismaService){}
+    constructor(readonly prisma: PrismaService){}
 
     async register(data: StudentInterface): Promise<Student>{
         if(await this.checkEmailExist(data.email)) throw new BadRequestException('student already exist');
@@ -72,7 +72,7 @@ export class StudentService {
 
     async checkEmailExist(email: string): Promise<boolean>{
         try{
-            const student = await this.prisma.student.findFirst({
+            const student = await this.prisma.student.findUnique({
                 where: {
                     email
                 }
