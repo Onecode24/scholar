@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt'
 import { Student } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from './prisma/prisma.service';
+import { RefreshTokenService } from './refreshToken/refresh-token.service';
 @Injectable()
 export class AppService extends StudentService{
 
@@ -14,6 +15,7 @@ export class AppService extends StudentService{
   getHello(): string {
     return 'Hello World!';
   }
+  private refreshTokenService: RefreshTokenService = new RefreshTokenService(this.jwtService);
 
   async signupStudent(data: StudentInterface): Promise<Record<string,any>>{
     try {
@@ -49,9 +51,11 @@ export class AppService extends StudentService{
       }
       const {password, ...res} = student;
       const access_token = await this.generateToken(res.id);
+      const refresh_token = await this.refreshTokenService.generateRefreshToken(res.id);
       return Promise.resolve({
         ...res,
         access_token,
+        refresh_token
       })
       
     } catch (error) {
