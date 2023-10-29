@@ -20,6 +20,8 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL=postgresql://root:rootadmin@scholar_database:5432/scholar
     depends_on:
       - database
     ports:

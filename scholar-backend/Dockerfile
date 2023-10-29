@@ -13,5 +13,4 @@ CMD ["npx","prisma","migrate","deploy"]
 
 RUN yarn build
 
-EXPOSE 4000
 CMD ["node","dist/main.js"]
